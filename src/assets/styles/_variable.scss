@@ -1,0 +1,148 @@
+// Импорт современных модулей Sass
+@use "sass:color";
+@use "sass:math";
+
+$container-w: 1480px;
+$index: calc(1vh + 1vw);
+$start-x: clamp(0vw, calc((100vw - $container-w) / 2), 0vw);
+
+// SCSS Переменные
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$danger-color: #e74c3c;
+$warning-color: #ffc107;
+$info-color: #17a2b8;
+$light-color: #f8f9fa;
+$dark-color: #333;
+$text-color:#333;
+$success-color:green;
+// Размеры
+$font-size-base: 1rem;
+$font-size-small: 0.875rem;
+$font-size-large: 1.25rem;
+$font-size-xl: 1.5rem;
+$font-size-xxl: 2rem;
+
+// Отступы
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+$spacing-xxl: 3rem;
+
+// Границы
+$border-radius: 8px;
+$border-radius-sm: 4px;
+$border-radius-lg: 12px;
+
+// Тени
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+// Анимации
+$transition-fast: 0.15s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Контрольные точки
+$breakpoint-xs: 576px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
+$breakpoint-xl: 1400px;
+
+// Миксины
+@mixin button-style($bg-color, $text-color: white) {
+  @include hover-effect($bg-color);
+  color: $text-color;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  font-size: $font-size-base;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  
+  &:focus {
+    outline: 2px solid alpha-color($bg-color, 0.4);
+    outline-offset: 2px;
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: $bg-color;
+      transform: none;
+    }
+  }
+}
+
+
+// Современные функции для работы с цветами (замена darken, lighten)
+@function darken-color($color, $amount) {
+  @return color.adjust($color, $lightness: -$amount);
+}
+
+@function lighten-color($color, $amount) {
+  @return color.adjust($color, $lightness: $amount);
+}
+
+@function saturate-color($color, $amount) {
+  @return color.adjust($color, $saturation: $amount);
+}
+
+@function desaturate-color($color, $amount) {
+  @return color.adjust($color, $saturation: -$amount);
+}
+
+@function adjust-hue-color($color, $amount) {
+  @return color.adjust($color, $hue: $amount);
+}
+
+// Утилитарные функции для цветов
+@function alpha-color($color, $alpha) {
+  @return color.change($color, $alpha: $alpha);
+}
+
+// Функции для создания цветовых палитр
+@function get-contrast-color($color) {
+  $lightness: color.lightness($color);
+  @if $lightness > 50% {
+    @return $dark-color;
+  } @else {
+    @return white;
+  }
+}
+
+// Генерация оттенков цвета
+@function shade($color, $percentage) {
+  @return color.mix(black, $color, $percentage);
+}
+
+@function tint($color, $percentage) {
+  @return color.mix(white, $color, $percentage);
+}
+
+// Миксин для создания hover эффектов
+@mixin hover-effect($base-color, $darken-amount: 10%) {
+  background-color: $base-color;
+  transition: all $transition-normal;
+  
+  &:hover {
+    background-color: darken-color($base-color, $darken-amount);
+    transform: translateY(-1px);
+    box-shadow: $shadow-md;
+  }
+  
+  &:active {
+    background-color: darken-color($base-color, $darken-amount * 1.5);
+    transform: translateY(0);
+    box-shadow: $shadow-sm;
+  }
+}

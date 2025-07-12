@@ -1,0 +1,340 @@
+
+@use "mixines" as *;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: $font-size-base;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: $dark-color;
+  background-color: $light-color;
+}
+
+// BEM Blocks
+
+// Button Block (btn)
+.btn {
+  @include button-style($primary-color);
+  
+  // Button Modifiers
+  &--primary {
+    @include button-style($primary-color);
+  }
+  
+  &--secondary {
+    @include button-style($secondary-color);
+  }
+  
+  &--danger {
+    @include button-style($danger-color);
+  }
+  
+  &--warning {
+    @include button-style($warning-color, $dark-color);
+  }
+  
+  &--info {
+    @include button-style($info-color);
+  }
+  
+  &--light {
+    @include button-style($light-color, $dark-color);
+    border: 1px solid #dee2e6;
+  }
+  
+  &--large {
+    padding: $spacing-md $spacing-xl;
+    font-size: $font-size-large;
+  }
+  
+  &--small {
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-small;
+  }
+  
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    &:hover {
+      opacity: 0.5;
+      transform: none;
+    }
+  }
+}
+
+// Card Block
+.card {
+  background: white;
+  border-radius: $border-radius;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  transition: all $transition-normal;
+  
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+  
+  // Card Elements
+  &__header {
+    padding: $spacing-lg;
+    background: $light-color;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  &__title {
+    font-size: $font-size-large;
+    font-weight: 600;
+    color: $dark-color;
+    margin: 0;
+  }
+  
+  &__body {
+    padding: $spacing-lg;
+  }
+  
+  &__footer {
+    padding: $spacing-md $spacing-lg;
+    background: $light-color;
+    border-top: 1px solid #e9ecef;
+  }
+  
+  // Card Modifiers
+  &--featured {
+    border-left: 4px solid $primary-color;
+  }
+  
+  &--warning {
+    border-left: 4px solid $warning-color;
+  }
+  
+  &--error {
+    border-left: 4px solid $danger-color;
+  }
+  
+  &--success {
+    border-left: 4px solid $secondary-color;
+  }
+}
+
+// Form Block
+.form {
+  // Form Elements
+  &__group {
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__label {
+    display: block;
+    margin-bottom: $spacing-sm;
+    font-weight: 500;
+    color: $dark-color;
+    font-size: $font-size-small;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  &__input {
+    width: 100%;
+    padding: $spacing-md;
+    border: 1px solid #ddd;
+    border-radius: $border-radius;
+    font-size: $font-size-base;
+    transition: all $transition-normal;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+    
+    &::placeholder {
+      color: #999;
+    }
+    
+    // Input Modifiers
+    &--error {
+      border-color: $danger-color;
+      
+      &:focus {
+        border-color: $danger-color;
+        box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+      }
+    }
+    
+    &--success {
+      border-color: $secondary-color;
+      
+      &:focus {
+        border-color: $secondary-color;
+        box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+      }
+    }
+  }
+  
+  &__error {
+    color: $danger-color;
+    font-size: $font-size-small;
+    margin-top: $spacing-xs;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+  
+  &__success {
+    color: $secondary-color;
+    font-size: $font-size-small;
+    margin-top: $spacing-xs;
+  }
+}
+
+// Navigation Block
+.nav {
+  // Nav Elements
+  &__list {
+    @include clear-list;
+    display: flex;
+    gap: $spacing-md;
+  }
+  
+  &__item {
+    position: relative;
+  }
+  
+  &__link {
+    text-decoration: none;
+    color: $dark-color;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius;
+    transition: all $transition-normal;
+    font-weight: 500;
+    
+    &:hover {
+      background: $light-color;
+      color: $primary-color;
+    }
+    
+    // Link Modifiers
+    &--active {
+      background: $primary-color;
+      color: white;
+      
+      &:hover {
+        background: darken-color($primary-color, 10%);
+      }
+    }
+  }
+}
+
+// Утилиты
+.container {
+  max-width: $breakpoint-xl;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+  
+  @include mobile {
+    padding: 0 $spacing-sm;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+// Spacing utilities
+.mt {
+  &-1 { margin-top: $spacing-sm; }
+  &-2 { margin-top: $spacing-md; }
+  &-3 { margin-top: $spacing-lg; }
+  &-4 { margin-top: $spacing-xl; }
+  &-5 { margin-top: $spacing-xxl; }
+}
+
+.mb {
+  &-1 { margin-bottom: $spacing-sm; }
+  &-2 { margin-bottom: $spacing-md; }
+  &-3 { margin-bottom: $spacing-lg; }
+  &-4 { margin-bottom: $spacing-xl; }
+  &-5 { margin-bottom: $spacing-xxl; }
+}
+
+.p {
+  &-1 { padding: $spacing-sm; }
+  &-2 { padding: $spacing-md; }
+  &-3 { padding: $spacing-lg; }
+  &-4 { padding: $spacing-xl; }
+  &-5 { padding: $spacing-xxl; }
+}
+
+// Display utilities
+.d-flex {
+  display: flex;
+}
+
+.d-grid {
+  display: grid;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-none {
+  display: none;
+}
+
+// Flex utilities
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+// Responsive utilities
+.mobile-only {
+  @include tablet {
+    display: none !important;
+  }
+  
+  @include desktop {
+    display: none !important;
+  }
+}
+
+.desktop-only {
+  @include mobile {
+    display: none !important;
+  }
+}
